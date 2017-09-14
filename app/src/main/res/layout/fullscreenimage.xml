@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.sharon.trollmastermalayalam.methods.TouchImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:scaleType="fitCenter"
+        android:layout_height="match_parent" />
+
+    <com.joaquimley.faboptions.FabOptions
+        android:id="@+id/fab_options"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        app:background_color="@color/white"
+        app:fab_color="@color/com_facebook_blue" />
+
+</RelativeLayout>

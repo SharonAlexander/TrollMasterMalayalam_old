@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/layout_to_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <CheckBox
+            android:id="@+id/icuCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_icu"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollMCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_malayalam"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollRCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_republic"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/mntCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_malayalam_naughty_trolls"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/dankCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_dank_memes_malayalam"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/psctrollsCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_psc_trolls"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/kidilanCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_kidilan_trolls"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/sctCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_school_college_trolls"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollcricketCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_cricket_malayalam"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollfootballCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_football_malayalam"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollmcinemaCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_malayalam_cinema"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/mtmCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_malayalam_troll_masters_mtm"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/sheruCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_sheru_entertainment_hub"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cinemamixerCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_cinemamixer"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/cybertrollersCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_cyber_trollers"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/thengakolaCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_thengakola"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollmollywoodCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_mollywood"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollclashersCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_clashers_kerala"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/outspokenCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_outspoken"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/btechtrollsCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_b_tech_trolls"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/mplingCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_malayalam_pling"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollkeralaCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_kerala"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollreligionCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_religion"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/trollktuCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_troll_ktu"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/pravasitrollsCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_pravasi_trolls"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/onlinetmCheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pagename_online_troll_media_otm"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+</ScrollView>

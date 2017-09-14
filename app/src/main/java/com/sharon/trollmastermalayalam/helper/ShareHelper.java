@@ -69,4 +69,18 @@ public class ShareHelper {
         shareIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         activity.startActivity(Intent.createChooser(shareIntent, activity.getString(R.string.intent_title_share)));
     }
+
+    public void shareAppDetails(Activity activity) {
+        Intent intent = new Intent();
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, activity.getString(R.string.app_share_message));
+        intent.setAction(Intent.ACTION_SEND);
+
+        try {
+            activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.intent_title_share)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            ex.printStackTrace();
+            Toast.makeText(activity, activity.getString(R.string.toast_whatsapp_not_found), Toast.LENGTH_SHORT).show();
+        }
+    }
 }

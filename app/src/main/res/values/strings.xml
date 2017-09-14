@@ -8,6 +8,8 @@
     <string name="about">About</string>
     <string name="add_remove">Add/Remove Pages</string>
 
+    <string name="app_share_message">Install this Super Awesome Troll App!!\n https://play.google.com/store/apps/details?id=com.sharon.trollmastermalayalam&amp;hl=en</string>
+
     <!--Permission Related-->
     <string name="storage_permission_prompt_message">Storage permission needed</string>
     <string name="permission_prompt_settings_return">From settings</string>

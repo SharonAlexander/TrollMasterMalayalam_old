@@ -23,6 +23,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.sharon.trollmastermalayalam.helper.ShareHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -399,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
                         showAlertAboutUs();
                         return true;
                     case 102://share the app
+                        new ShareHelper().shareAppDetails(MainActivity.this);
                         return true;
                     case 103: //add remove pages
                         startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));

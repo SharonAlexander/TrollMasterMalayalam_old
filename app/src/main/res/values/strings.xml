@@ -68,9 +68,12 @@
 
     <!--Settings-->
     <string name="aboutus">About Us</string>
-    <string name="prefrence_rateapp_title">Let us know if we are doing good</string>
+    <string name="prefrence_rateapp_title">Let us know if you are enjoying!</string>
     <string name="preference_rateapp_dialogTitle">Rate Troll Master!</string>
     <string name="purchase_error">Error</string>
     <string name="purchase_already_owned">Error in purchase</string>
+    <string name="captioninclude">Include caption in shared message</string>
+    <string name="captionsummarychecked">Troll text is added to shared message</string>
+    <string name="captionsummaryunchecked">Troll text is not added to shared message</string>
 
 </resources>

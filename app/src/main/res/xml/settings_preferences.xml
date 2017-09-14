@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <!--<Preference-->
-    <!--android:icon="@drawable/directory_black"-->
-    <!--android:key="filepick"-->
-    <!--android:title="@string/edittextpreference_title" />-->
+    <CheckBoxPreference
+        android:key="captioninclude"
+        android:title="@string/captioninclude" />
     <Preference
         android:icon="@drawable/rate_black"
         android:key="rateus"

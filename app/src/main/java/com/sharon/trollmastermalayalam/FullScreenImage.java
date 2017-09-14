@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -25,7 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class FullScreenImage extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener {
 
     FabOptions fabOptions;
-    String picurl, picid;
+    String picurl, picid, picmessage;
     String imageBasepath;
 
     @Override
@@ -35,8 +34,9 @@ public class FullScreenImage extends AppCompatActivity implements View.OnClickLi
 
         picurl = getIntent().getStringExtra("picurl");
         picid = getIntent().getStringExtra("picid");
+        picmessage = getIntent().getStringExtra("picmessage");
         imageBasepath = Constants.folder_main_path + Constants.folder_name + picid + Constants.image_extention;
-        final TouchImageView imageView = (TouchImageView) findViewById(R.id.img);
+        final TouchImageView imageView = findViewById(R.id.img);
 
         Glide.with(this).asBitmap().load(picurl).into(new SimpleTarget<Bitmap>() {
             @Override
@@ -45,7 +45,7 @@ public class FullScreenImage extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        fabOptions = (FabOptions) findViewById(R.id.fab_options);
+        fabOptions = findViewById(R.id.fab_options);
         fabOptions.setButtonsMenu(R.menu.fab_buttons);
         fabOptions.setOnClickListener(this);
         imageView.setOnTouchListener(this);
@@ -92,7 +92,7 @@ public class FullScreenImage extends AppCompatActivity implements View.OnClickLi
     private void imageDownloadMethod(int i) {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            new AsyncDownloadAndShare(i, this, picurl, picid, null, "photo", imageBasepath).execute();
+            new AsyncDownloadAndShare(i, this, picurl, picmessage, picid, null, "photo", imageBasepath).execute();
         } else {
             EasyPermissions.requestPermissions(this, this.getString(R.string.storage_permission_prompt_message),
                     001, perms);

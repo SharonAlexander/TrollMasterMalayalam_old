@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
@@ -27,6 +28,7 @@ public class Settings extends PreferenceFragment {
     static final String DONATE_SMALL_THANKS = "1";
     IabHelper mHelper;
     int measureWidth, measureHeight;
+    Preferences settingspreferences;
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener
             = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result,
@@ -56,9 +58,28 @@ public class Settings extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings_preferences);
 
+        settingspreferences = new Preferences(getActivity());
+
+        getActivity().setTitle("Settings");
+
         measureWidth = Resources.getSystem().getDisplayMetrics().widthPixels;
         measureHeight = Resources.getSystem().getDisplayMetrics().heightPixels;
 
+        final CheckBoxPreference captioninclude = (CheckBoxPreference) getPreferenceManager().findPreference("captioninclude");
+        captioninclude.setSummary(settingspreferences.getCheckPref("captioninclude") ? getActivity().getString(R.string.captionsummarychecked)
+                : getActivity().getString(R.string.captionsummaryunchecked));
+        captioninclude.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                if (captioninclude.isChecked()) {
+                    settingspreferences.putCheckPref("captioninclude", true);
+                    captioninclude.setSummary(getActivity().getString(R.string.captionsummarychecked));
+                } else {
+                    settingspreferences.putCheckPref("captioninclude", false);
+                    captioninclude.setSummary(getActivity().getString(R.string.captionsummaryunchecked));
+                }
+                return false;
+            }
+        });
         Preference preferences = findPreference("rateus");
         preferences.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
@@ -162,7 +183,7 @@ public class Settings extends PreferenceFragment {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        String version = pInfo.versionName;
+        String version = pInfo != null ? pInfo.versionName : "";
         new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.app_name)
                 .setMessage("Version:" + version + "\n" + Constants.alert_developer_info)

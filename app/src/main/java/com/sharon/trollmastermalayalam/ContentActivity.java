@@ -5,13 +5,11 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +54,8 @@ public class ContentActivity extends Fragment implements ListAdapter.ListAdapter
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.troll_layout, container, false);
 
-        retry = (Button) rootView.findViewById(R.id.retry_button);
-        noInternetLayout = (LinearLayout) rootView.findViewById(R.id.no_internet_layout);
+        retry = rootView.findViewById(R.id.retry_button);
+        noInternetLayout = rootView.findViewById(R.id.no_internet_layout);
         d = new ArrayList<>();
         internetConnectionChecker = new InternetConnectionChecker(getActivity());
         id = getArguments().getString("id");
@@ -180,9 +178,11 @@ public class ContentActivity extends Fragment implements ListAdapter.ListAdapter
     public void onPhotoFullScreenRequest(int position) {
         String picurl = d.get(position).getFullPicture();
         String picid = d.get(position).getId();
+        String picmessage = d.get(position).getMessage();
         Intent intent = new Intent(getActivity(), FullScreenImage.class);
         intent.putExtra("picurl", picurl);
         intent.putExtra("picid", picid);
+        intent.putExtra("picmessage", picmessage);
         startActivity(intent);
     }
 
@@ -207,11 +207,12 @@ public class ContentActivity extends Fragment implements ListAdapter.ListAdapter
         } else if ("video".equals(d.get(position).getType())) {
             url = d.get(position).getSource();
         }
+        String captionmessage = d.get(position).getMessage();
         String id = d.get(position).getId();
         String type = d.get(position).getType();
         String link = d.get(position).getType().equals("link") ? d.get(position).getLink() : d.get(position).getPermalinkUrl();
         String imageBasepath = Constants.folder_main_path + Constants.folder_name + id + Constants.image_extention;
-        new AsyncDownloadAndShare(4, getActivity(), url, id, link, type, type.equals("photo") ? imageBasepath : null).execute();
+        new AsyncDownloadAndShare(4, getActivity(), url, captionmessage, id, link, type, type.equals("photo") ? imageBasepath : null).execute();
     }
 
     @Override

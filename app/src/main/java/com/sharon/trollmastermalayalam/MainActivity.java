@@ -10,8 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -105,25 +103,36 @@ public class MainActivity extends AppCompatActivity {
         if (result.isDrawerOpen()) {
             result.closeDrawer();
         } else {
-            alertExitPic();
+            Settings frag = (Settings) getFragmentManager().findFragmentByTag("settings");
+            if (frag != null) {
+                Fragment fragment = new ContentActivity();
+                Bundle bundle = new Bundle();
+                bundle.putString("id", Constants.id_icu);
+                bundle.putInt("pic", R.drawable.icon_icu);
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).commit();
+                setTitle(getString(R.string.app_name));
+            } else {
+                alertExitPic();
+            }
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     private void createNavigationHeader() {
         headerResult = new AccountHeaderBuilder()
@@ -383,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 100://settings
-                        getFragmentManager().beginTransaction().replace(R.id.mainFrame, new Settings()).commit();
+                        getFragmentManager().beginTransaction().replace(R.id.mainFrame, new Settings(), "settings").commit();
                         result.closeDrawer();
                         return true;
                     case 101://about
@@ -440,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
         }
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         alertdialog.setView(imageView)
-                .setPositiveButton("ആർക്കും എന്നെ തടുക്കാനാവില്ല.", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         MainActivity.super.onBackPressed();
@@ -470,7 +479,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        String version = pInfo.versionName;
+        String version = pInfo != null ? pInfo.versionName : "";
         new AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
                 .setMessage("Version:" + version + "\n" + Constants.alert_developer_info)

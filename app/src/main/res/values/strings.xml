@@ -66,4 +66,11 @@
     <string name="pagename_malayalam_pling">Malayalam Pling</string>
     <string name="pagename_online_troll_media_otm">Online Troll Media - OTM</string>
 
+    <!--Settings-->
+    <string name="aboutus">About Us</string>
+    <string name="prefrence_rateapp_title">Let us know if we are doing good</string>
+    <string name="preference_rateapp_dialogTitle">Rate Troll Master!</string>
+    <string name="purchase_error">Error</string>
+    <string name="purchase_already_owned">Error in purchase</string>
+
 </resources>

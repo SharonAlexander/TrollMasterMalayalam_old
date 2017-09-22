@@ -77,5 +77,11 @@
     <string name="captioninclude">Include caption in shared message</string>
     <string name="captionsummarychecked">Troll text is added to shared message</string>
     <string name="captionsummaryunchecked">Troll text is not added to shared message</string>
+    <string name="preference_addRemove_dialogTitle">Add/Remove Pages</string>
+
+    <string name="exit_toast">മുതലാളീ..</string>
+    <string name="settings_purchased_info">മുതലാളി എന്നെ ഒന്ന് വാങ്ങിച്ചതാ .. മറന്നോ :)</string>
+    <string name="settings_purchase_cancel">മുതലാളീ ..</string>
+    <string name="settings_purchase_success">നന്ദിയുണ്ട് മുതലാളീ .. നന്ദിയുണ്ട് .</string>
 
 </resources>

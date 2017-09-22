@@ -10,6 +10,7 @@ import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,10 @@ import android.widget.LinearLayout;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.gson.GsonBuilder;
 import com.sharon.trollmastermalayalam.helper.AsyncDownload;
 import com.sharon.trollmastermalayalam.helper.AsyncDownloadAndShare;
@@ -47,12 +52,24 @@ public class ContentActivity extends Fragment implements ListAdapter.ListAdapter
     String id;
     int page_pic;
     InternetConnectionChecker internetConnectionChecker;
+    Preferences preferences;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private AdView mAdViewBannerMain;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.troll_layout, container, false);
+
+        preferences = new Preferences(getActivity());
+        mAdViewBannerMain = (AdView) rootView.findViewById(R.id.adViewBannerMain);
+        Log.d("onCreateView: ", preferences.getPremiumInfo() + "");
+        if (!preferences.getPremiumInfo()) {
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdViewBannerMain.loadAd(adRequest);
+        } else {
+            mAdViewBannerMain.setVisibility(View.GONE);
+        }
 
         retry = rootView.findViewById(R.id.retry_button);
         noInternetLayout = rootView.findViewById(R.id.no_internet_layout);

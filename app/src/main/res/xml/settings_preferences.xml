@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/add_remove"
+        android:key="addremove"
+        android:title="@string/preference_addRemove_dialogTitle" />
     <CheckBoxPreference
         android:key="captioninclude"
         android:title="@string/captioninclude" />

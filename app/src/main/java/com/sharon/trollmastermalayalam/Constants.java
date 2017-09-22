@@ -4,9 +4,17 @@ import android.os.Environment;
 
 public class Constants {
 
+    //apilicense
+    public static String apilicence = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArie0pEfCFNWlqZ5x0vLLD2W0rQ/nFg3AGlAKh0U4U9GNwirUyxYluqcn1131aLUd2ff1IQ+eILzm/TKvX2KDsXUSgU0Jcl+ar/oSLlXy8RvevK1JmN2CPgotGCoLiTiRSw2SbprvQ+sUt6Pk0DJy4YWrm1SFAqYJuGeCIkRlaihZlN6nIgtdEcmw4XnRGuGtqkZm9CV6iRrzaeh1qk4kEhPbFlldpk+jBZJ3C/vlWvtfEqf+Fijb1Z5v+IoYNBxykzkpbMkBkuWWDw+hdZyp/cRyPhtjIL/g5zNTw1fgtPYR6n5iNmUpJFRREUSvXXQf+7i0EX2tz6IwNk9EX/xqdwIDAQAB";
+
     //    Facebook Creds
-    public static String facebook_app_id = "100834660607292";
-    public static String facebook_app_token = "100834660607292|PQc15NCVJhJFIitPZj42QgzC-bo";
+    public static String facebook_app_id = "482856168756600";
+    public static String facebook_app_token = "482856168756600|Oz-RWx6e1U5z011vOooc1Io1v2c";
+
+    //Ads
+    public static String admob_app_id = "";
+
+//    public static String admob_app_id = "";
 
     //    Pages ID
     public static String id_icu = "/632474226810626/posts";

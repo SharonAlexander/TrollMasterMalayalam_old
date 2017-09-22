@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "721505043312",
+    "firebase_url": "https://troll-master-malayalam.firebaseio.com",
+    "project_id": "troll-master-malayalam",
+    "storage_bucket": "troll-master-malayalam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721505043312:android:26c0d4d63f0565d2",
+        "android_client_info": {
+          "package_name": "com.sharon.trollmastermalayalam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721505043312-m36beckn0o0c0lqu9g6nli1buep6gqun.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxKJa9N6XSmAW7gLGWP-Jn7-yFBXWa-5s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

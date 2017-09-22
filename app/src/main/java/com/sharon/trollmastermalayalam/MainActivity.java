@@ -10,9 +10,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -37,23 +43,46 @@ public class MainActivity extends AppCompatActivity {
     DividerDrawerItem item_divider;
     SecondaryDrawerItem item_settings, item_about, item_shareTheApp, item_addRemove;
     Preferences preferences;
-
+    boolean isPremium = false;
+    int adCount = 0;
+    private InterstitialAd mInterstitialAdforPages, mInterstitialAdforAddRemove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.app_bar_main);
+
+        CheckPurchase.checkpurchases(this);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         preferences = new Preferences(this);
 
+        isPremium = preferences.getPremiumInfo();
+        Log.d("onCreate: ", isPremium + "");
+        if (!isPremium) {
+            MobileAds.initialize(getApplicationContext(), Constants.admob_app_id);
+            mInterstitialAdforPages = new InterstitialAd(this);
+            mInterstitialAdforPages.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+            mInterstitialAdforPages.loadAd(new AdRequest.Builder().build());
+        }
+
         if (preferences.isFirstTimeLaunch()) {
             setDefaultDrawerItemChecks();
         }
 
         completeNavigationDrawer();
+
+        mInterstitialAdforPages.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                mInterstitialAdforPages.loadAd(new AdRequest.Builder().build());
+            }
+
+        });
+
     }
 
     private void setDefaultDrawerItemChecks() {
@@ -101,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        CheckPurchase.dispose();
         if (result.isDrawerOpen()) {
             result.closeDrawer();
         } else {
@@ -285,6 +315,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Fragment fragment = new ContentActivity();
                 Bundle bundle = new Bundle();
+                adCount = adCount + 1;
                 switch ((int) drawerItem.getIdentifier()) {
                     case 1:
                         bundle.putString("id", Constants.id_icu);
@@ -403,13 +434,23 @@ public class MainActivity extends AppCompatActivity {
                         new ShareHelper().shareAppDetails(MainActivity.this);
                         return true;
                     case 103: //add remove pages
-                        startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));
+                        if (!isPremium) {
+                            adsAddRemove();
+                        } else {
+                            startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));
+                        }
                         return true;
 
 
                     default:
                         showPageError();
                         return true;
+                }
+                if (adCount == 5 && !isPremium) {
+                    if (mInterstitialAdforPages.isLoaded()) {
+                        mInterstitialAdforPages.show();
+                    }
+                    adCount = 0;
                 }
                 fragment.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.mainFrame, fragment).commit();
@@ -442,18 +483,20 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(
                 new ContextThemeWrapper(MainActivity.this, R.style.AlertDialogTheme));
         ImageView imageView = new ImageView(MainActivity.this);
-        int x = (int) (Math.random() * 2);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        int x = (int) (Math.random() * 3);
         if (x == 0) {
-            //EDIT THIS IMAGE
             imageView.setImageResource(R.drawable.exit_troll_pic);
         } else if (x == 1) {
             imageView.setImageResource(R.drawable.exit_troll_pic2);
+        } else if (x == 2) {
+            imageView.setImageResource(R.drawable.exit_troll_pic3);
         }
-        imageView.setScaleType(ImageView.ScaleType.CENTER);
         alertdialog.setView(imageView)
                 .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(MainActivity.this, R.string.exit_toast, Toast.LENGTH_SHORT).show();
                         MainActivity.super.onBackPressed();
                     }
                 })
@@ -492,5 +535,23 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setIcon(R.mipmap.ic_launcher)
                 .show();
+    }
+
+    private void adsAddRemove() {
+        mInterstitialAdforAddRemove = new InterstitialAd(this);
+        mInterstitialAdforAddRemove.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAdforAddRemove.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                mInterstitialAdforAddRemove.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        mInterstitialAdforAddRemove.loadAd(new AdRequest.Builder().build());
+                    }
+
+                });
+                startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));
+            }
+        });
     }
 }

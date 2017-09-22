@@ -446,6 +446,7 @@ public class MainActivity extends AppCompatActivity {
                         showPageError();
                         return true;
                 }
+                //check this implementation for on adclosed
                 if (adCount == 5 && !isPremium) {
                     if (mInterstitialAdforPages.isLoaded()) {
                         mInterstitialAdforPages.show();

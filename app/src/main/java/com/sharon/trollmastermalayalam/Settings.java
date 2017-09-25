@@ -25,7 +25,7 @@ import com.sharon.trollmastermalayalam.util.Purchase;
 
 public class Settings extends PreferenceFragment {
 
-    static final String ITEM_SKU_SMALL = "com.sharon.trollmaster_small";
+    static final String ITEM_SKU_SMALL = Constants.SKU_NAME;
     //    static final String ITEM_SKU_SMALL = "android.test.purchased";
     static final String DONATE_SMALL_THANKS = "1";
     IabHelper mHelper;

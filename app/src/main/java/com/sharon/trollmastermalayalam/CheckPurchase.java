@@ -11,7 +11,7 @@ import com.sharon.trollmastermalayalam.util.Purchase;
 
 public class CheckPurchase {
 
-    static final String ITEM_SKU_SMALL = "com.sharon.trollmaster_small";
+    static final String ITEM_SKU_SMALL = Constants.SKU_NAME;
     public static boolean isPremium = false;
     static IabHelper mHelper;
     //    static final String ITEM_SKU_SMALL = "com.test.purchased";

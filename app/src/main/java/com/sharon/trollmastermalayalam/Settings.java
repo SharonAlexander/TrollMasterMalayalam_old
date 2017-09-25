@@ -14,7 +14,6 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -36,8 +35,6 @@ public class Settings extends PreferenceFragment {
             = new IabHelper.OnIabPurchaseFinishedListener() {
         public void onIabPurchaseFinished(IabResult result,
                                           Purchase purchase) {
-            Log.d("onIabPurchaseFinished: ", purchase + "");
-            Log.d("onIabPurchaseFinished: ", result + "");
             if (purchase != null) {
                 if (purchase.getSku().contentEquals(ITEM_SKU_SMALL)) {
                     Message(DONATE_SMALL_THANKS);
@@ -143,7 +140,6 @@ public class Settings extends PreferenceFragment {
                 resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
         } else {
-            Log.d("onActivityResult", "onActivityResult handled by IABUtil.");
         }
     }
 
@@ -162,9 +158,9 @@ public class Settings extends PreferenceFragment {
 
         ImageView imageView = new ImageView(getActivity());
         if (message.contentEquals(DONATE_SMALL_THANKS)) {
-            imageView.setImageResource(R.drawable.exit_troll_pic2);
+            imageView.setImageResource(R.drawable.purchase_success);
         } else {
-            imageView.setImageResource(R.drawable.exit_troll_pic);
+            imageView.setImageResource(R.drawable.exit_troll_pic3);
         }
         builder.addContentView(imageView, new RelativeLayout.LayoutParams(
                 measureWidth,

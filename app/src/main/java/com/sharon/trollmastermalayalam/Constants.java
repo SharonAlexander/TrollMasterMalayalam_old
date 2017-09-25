@@ -12,7 +12,11 @@ public class Constants {
     public static String facebook_app_token = "482856168756600|Oz-RWx6e1U5z011vOooc1Io1v2c";
 
     //Ads
-    public static String admob_app_id = "";
+    public static String admob_app_id = "ca-app-pub-1740451756664908~2651873569";
+
+    public static String admob_banner_main = "ca-app-pub-1740451756664908/5745721011";
+    public static String admob_interstitialpages = "ca-app-pub-1740451756664908/3896796189";
+    public static String admob_interstitialaddremove = "ca-app-pub-1740451756664908/6787339949";
 
 //    public static String admob_app_id = "";
 
@@ -58,6 +62,6 @@ public class Constants {
     public static String whatsapp_package = "com.whatsapp";
 
 //    Common
-    public static String alert_developer_info = "Developed by Sharon Alexander";
-    public static String added_share_message = "Shared via Troll Master";
+public static String alert_developer_info = "Developed by MadRabbits\u00A9";
+    public static String added_share_message = "Shared via Troll Master\nhttps://goo.gl/WBWL6a";
 }

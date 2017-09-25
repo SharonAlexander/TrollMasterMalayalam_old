@@ -63,9 +63,8 @@ public class ContentActivity extends Fragment implements ListAdapter.ListAdapter
 
         preferences = new Preferences(getActivity());
         mAdViewBannerMain = (AdView) rootView.findViewById(R.id.adViewBannerMain);
-        Log.d("onCreateView: ", preferences.getPremiumInfo() + "");
         if (!preferences.getPremiumInfo()) {
-            AdRequest adRequest = new AdRequest.Builder().build();
+            AdRequest adRequest = new AdRequest.Builder().addTestDevice("EFE01EDD6C65F47A8B03AFD4526C76C9").build();
             mAdViewBannerMain.loadAd(adRequest);
         } else {
             mAdViewBannerMain.setVisibility(View.GONE);

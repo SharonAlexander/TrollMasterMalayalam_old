@@ -1,15 +1,23 @@
 package com.sharon.trollmastermalayalam.helper;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.sharon.trollmastermalayalam.Constants;
 import com.sharon.trollmastermalayalam.R;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
 
 public class ShareHelper {
 
@@ -71,16 +79,46 @@ public class ShareHelper {
     }
 
     public void shareAppDetails(Activity activity) {
+        saveBitmapToFile(activity);
+        Uri uri = Uri.fromFile(new File(Constants.folder_main_path + Constants.folder_name + "app_share_image.jpeg"));
         Intent intent = new Intent();
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, activity.getString(R.string.app_share_message));
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        intent.setType("image/jpeg");
         intent.setAction(Intent.ACTION_SEND);
 
         try {
             activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.intent_title_share)));
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();
-            Toast.makeText(activity, activity.getString(R.string.toast_whatsapp_not_found), Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, activity.getString(R.string.error), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public boolean saveBitmapToFile(Context context) {
+
+        File folder = new File(Constants.folder_main_path + Constants.folder_name);
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        File imageFile = new File(folder, "app_share_image.jpeg");
+        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), R.drawable.app_share_image);
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(imageFile);
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+            return true;
+        } catch (IOException e) {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 }

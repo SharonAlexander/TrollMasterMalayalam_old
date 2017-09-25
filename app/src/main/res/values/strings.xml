@@ -5,10 +5,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="about">About</string>
+    <string name="about">About us</string>
     <string name="add_remove">Add/Remove Pages</string>
 
-    <string name="app_share_message">Install this Super Awesome Troll App!!\n https://play.google.com/store/apps/details?id=com.sharon.trollmastermalayalam&amp;hl=en</string>
+    <string name="app_share_message">ഈ ട്രോള് ആപ്പ് ഉപയോഗിച്ചാൽ നിങ്ങൾ ഞെട്ടും !!\n https://goo.gl/WBWL6a</string>
 
     <!--Permission Related-->
     <string name="storage_permission_prompt_message">Storage permission needed</string>

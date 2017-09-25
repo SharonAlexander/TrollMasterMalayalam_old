@@ -10,7 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -31,7 +32,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.sharon.trollmastermalayalam.helper.ShareHelper;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
     static Drawer result;
     static PrimaryDrawerItem item_icu, item_trollmalayalam, item_trollrepublic, item_mnt, item_dank, item_malayalampling, item_kidilantrolls,
@@ -61,28 +68,48 @@ public class MainActivity extends AppCompatActivity {
         preferences = new Preferences(this);
 
         isPremium = preferences.getPremiumInfo();
-        Log.d("onCreate: ", isPremium + "");
         if (!isPremium) {
             MobileAds.initialize(getApplicationContext(), Constants.admob_app_id);
             mInterstitialAdforPages = new InterstitialAd(this);
-            mInterstitialAdforPages.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-            mInterstitialAdforPages.loadAd(new AdRequest.Builder().build());
+            mInterstitialAdforPages.setAdUnitId(Constants.admob_interstitialpages);
+            mInterstitialAdforPages.loadAd(new AdRequest.Builder().addTestDevice("EFE01EDD6C65F47A8B03AFD4526C76C9").build());
+
+            mInterstitialAdforAddRemove = new InterstitialAd(this);
+            mInterstitialAdforAddRemove.setAdUnitId(Constants.admob_interstitialaddremove);
+            mInterstitialAdforAddRemove.loadAd(new AdRequest.Builder().addTestDevice("EFE01EDD6C65F47A8B03AFD4526C76C9").build());
+            mInterstitialAdforPages.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    mInterstitialAdforPages.loadAd(new AdRequest.Builder().build());
+                }
+
+            });
+            mInterstitialAdforAddRemove.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    mInterstitialAdforAddRemove.loadAd(new AdRequest.Builder().build());
+                    startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));
+                }
+            });
         }
 
         if (preferences.isFirstTimeLaunch()) {
             setDefaultDrawerItemChecks();
         }
 
+        saveAppShareImage();
         completeNavigationDrawer();
+    }
 
-        mInterstitialAdforPages.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                mInterstitialAdforPages.loadAd(new AdRequest.Builder().build());
-            }
-
-        });
-
+    @AfterPermissionGranted(888)
+    private void saveAppShareImage() {
+        String[] perms = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            boolean shareimage = new ShareHelper().saveBitmapToFile(this);
+        } else {
+            EasyPermissions.requestPermissions(this, this.getString(R.string.storage_permission_prompt_message),
+                    888, perms);
+        }
     }
 
     private void setDefaultDrawerItemChecks() {
@@ -149,21 +176,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            getFragmentManager().beginTransaction().replace(R.id.mainFrame, new Settings(), "settings").commit();
+        } else if (id == R.id.action_add_remove) {
+            if (!isPremium && mInterstitialAdforAddRemove.isLoaded()) {
+                mInterstitialAdforAddRemove.show();
+            } else {
+                startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));
+            }
+        } else if (id == R.id.action_about) {
+            showAlertAboutUs();
+        } else if (id == R.id.action_share) {
+            new ShareHelper().shareAppDetails(MainActivity.this);
+        }
+        return true;
+    }
 
     private void createNavigationHeader() {
         headerResult = new AccountHeaderBuilder()
@@ -434,14 +470,12 @@ public class MainActivity extends AppCompatActivity {
                         new ShareHelper().shareAppDetails(MainActivity.this);
                         return true;
                     case 103: //add remove pages
-                        if (!isPremium) {
-                            adsAddRemove();
+                        if (!isPremium && mInterstitialAdforAddRemove.isLoaded()) {
+                            mInterstitialAdforAddRemove.show();
                         } else {
                             startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));
                         }
                         return true;
-
-
                     default:
                         showPageError();
                         return true;
@@ -475,7 +509,7 @@ public class MainActivity extends AppCompatActivity {
         }
         imageView.setScaleType(ImageView.ScaleType.CENTER);
         alertdialog.setView(imageView)
-                .setTitle("കൊച്ചു കള്ളൻ..!!")
+//                .setTitle("കൊച്ചു കള്ളൻ..!!")
                 .setPositiveButton("ഇവിടെ മാത്രം ഞെക്കുക ..", null)
                 .show();
     }
@@ -538,21 +572,31 @@ public class MainActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void adsAddRemove() {
-        mInterstitialAdforAddRemove = new InterstitialAd(this);
-        mInterstitialAdforAddRemove.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAdforAddRemove.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                mInterstitialAdforAddRemove.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        mInterstitialAdforAddRemove.loadAd(new AdRequest.Builder().build());
-                    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 
-                });
-                startActivity(new Intent(MainActivity.this, AddRemovePagesActivity.class));
-            }
-        });
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
+            // Do something after user returned from app settings screen, like showing a Toast.
+            Toast.makeText(this, R.string.permission_prompt_settings_return, Toast.LENGTH_SHORT)
+                    .show();
+        }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this).build().show();
+        }
     }
 }

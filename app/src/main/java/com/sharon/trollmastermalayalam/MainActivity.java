@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         item_settings = new SecondaryDrawerItem().withIdentifier(100).withName(getString(R.string.action_settings)).withIcon(R.drawable.settings).withSelectable(false);
         item_about = new SecondaryDrawerItem().withIdentifier(101).withName(getString(R.string.about)).withIcon(R.drawable.about).withSelectable(false);
-        item_shareTheApp = new SecondaryDrawerItem().withIdentifier(102).withName(R.string.share).withIcon(R.drawable.share).withSelectable(false);
+        item_shareTheApp = new SecondaryDrawerItem().withIdentifier(102).withName(R.string.sharetheapp).withIcon(R.drawable.share).withSelectable(false);
         item_addRemove = new SecondaryDrawerItem().withIdentifier(103).withName(R.string.add_remove).withIcon(R.drawable.add_remove).withSelectable(false);
     }
 
